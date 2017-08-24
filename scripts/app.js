@@ -1,7 +1,7 @@
 var application=angular.module('angular_app', ['ngRoute']);
 
 
-application.controller('angular_controller', function($scope,$location,$timeout) {
+application.controller('angular_controller', function($scope,$location,$timeout,Http) {
     
     $scope.form={
         email:"",
@@ -11,7 +11,20 @@ application.controller('angular_controller', function($scope,$location,$timeout)
 
     $scope.login=function(){
         //$location.path('/dashboard');
-        $scope.showAlert();
+        //$scope.showAlert();
+        var email=$scope.form.email;
+        var password=$scope.form.password;
+
+        var data={
+            "what_to_do":"authenticate_user",
+            "email":email,
+            "password":password
+        }
+
+        var request=Http.post(data);
+        Http.send(request,function(response){
+            alert(response.data);
+        });
     }
 
     $scope.logout=function(){
